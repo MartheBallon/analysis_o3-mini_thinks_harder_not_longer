@@ -9,7 +9,7 @@ This repository contains the analysis code for "The Relationship Between Reasoni
 Download the data files at the links provided above and insert into the data folder.
 
 ## Models 
-We evaluate the performance and reasoning token use of OpenAI models gpt-4o-06-08-2024, o1-mini-12-09-2024, o3-mini-31-01-2025 medium (default) and o3-mini-31-01-2025 high on the Omni-MATH benchmark. The o3-mini high model, instead of medium, is obtained by setting \texttt{reasoning\_effort} to high.
+We evaluate the performance and reasoning token use of OpenAI models gpt-4o-06-08-2024, o1-mini-12-09-2024, o3-mini-31-01-2025 medium (default) and o3-mini-31-01-2025 high on the Omni-MATH benchmark. The o3-mini high model, instead of medium, is obtained by setting reasoning_effort to high.
 
 To correct the answers of the considered models, we employ the open-source large language model Omni-Judge by Gao et al. (2024), available at https://huggingface.co/KbsdJames/Omni-Judge. 
 
