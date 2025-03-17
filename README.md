@@ -14,3 +14,4 @@ We evaluate the performance and reasoning token use of OpenAI models gpt-4o-06-0
 To correct the answers of the considered models, we employ the open-source large language model Omni-Judge by Gao et al. (2024), available at https://huggingface.co/KbsdJames/Omni-Judge. 
 
 ## Overview of the code
+The performance_eval.py code is based on the evaluation code of the Omni-MATH paper by Gao et al (2024) available at https://github.com/KbsdJames/Omni-MATH.
