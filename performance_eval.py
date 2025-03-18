@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 
 #======================================================== Auxiliary Functions ========================================================
-
 def conditional_prob(tokens, tokens_c, tokens_nc):
     prob = []
     for i in range(len(tokens)):
@@ -92,7 +91,6 @@ def get_dataframe_reasoning_models(file):
 
 
 #======================================================== Performance Evaluation ========================================================
-
 def total_performance(file):
     Data_df = get_dataframe(file)
     total_performance = {'correct': 0, 'total': 0, 'accuracy': 0}
