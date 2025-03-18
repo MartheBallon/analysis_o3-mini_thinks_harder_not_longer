@@ -18,6 +18,6 @@ The performance_eval.py code is based on the evaluation code of the Omni-MATH pa
 
 - config.py: prompts to generate model completions, judge their answers on Omni-MATH
 - figures_appendix.ipynb: notebook to reproduce supplementary figures in our manuscript
-- figures_main_ipynb: notebook to reproduce main figures in our manuscript
+- figures_main.ipynb: notebook to reproduce main figures in our manuscript
 - performance_eval.py: auxiliary functions, performance/token evaluation functions necessary for the analysis
 - regression_analysis.ipynb: notebook to reproduce the regression analysis in our manuscript
