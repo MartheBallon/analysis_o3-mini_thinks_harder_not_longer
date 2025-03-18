@@ -15,3 +15,9 @@ To correct the answers of the considered models, we employ the open-source large
 
 ## Overview of the code
 The performance_eval.py code is based on the evaluation code of the Omni-MATH paper by Gao et al (2024), available at https://github.com/KbsdJames/Omni-MATH.
+
+- config.py: prompts to generate model completions, judge their answers on Omni-MATH
+- figures_appendix.ipynb: notebook to reproduce supplementary figures in our manuscript
+- figures_main_ipynb: notebook to reproduce main figures in our manuscript
+- performance_eval.py: auxiliary functions, performance/token evaluation functions necessary for the analysis
+- regression_analysis.ipynb: notebook to reproduce the regression analysis in our manuscript
