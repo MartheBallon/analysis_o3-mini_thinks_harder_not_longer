@@ -22,10 +22,7 @@ def value_to_color(val, palette, color_min, color_max, n_colors):
             return palette[ind]
         
 def value_to_progress(val, size_min, size_max):
-        if size_min == size_max:
-            return 
-        else:
-            return (val - size_min) / (size_max - size_min)
+    return (val - size_min) / (size_max - size_min)
 
 def parse_report(report):
     parts = report.split("## ")
