@@ -90,7 +90,7 @@ def get_dataframe_reasoning_models(file):
     return Data_df
 
 
-#======================================================== Performance Evaluation ========================================================
+#======================================================== Performance & Token Evaluation ========================================================
 def total_performance(file):
     Data_df = get_dataframe(file)
     total_performance = {'correct': 0, 'total': 0, 'accuracy': 0}
