@@ -84,13 +84,14 @@ def get_dataframe_reasoning_models(file):
                 else:
                     records.append({'domain': json_obj['domain'], 'difficulty': json_obj['difficulty'], 'problem': json_obj['problem'], 'answer': json_obj['answer'], 'omni-judge': json_obj['omni-judge'], 'correctness': False, 'reasoning_tokens': json_obj['reasoning_tokens']})
             except:
+                print(line)
                 continue
         
     Data_df = pd.DataFrame(records)
     return Data_df
 
 
-#======================================================== Performance & Token Evaluation ========================================================
+#======================================================== Performance Evaluation ========================================================
 def total_performance(file):
     Data_df = get_dataframe(file)
     total_performance = {'correct': 0, 'total': 0, 'accuracy': 0}
@@ -152,7 +153,7 @@ def difficulty_performance(file):
 def difficulty_tokens(file):
     Data_df = get_dataframe_reasoning_models(file)
 
-    # Perform q-cut to divide the data into equally sized difficulty tiers
+    #Perform q-cut to divide the data into equally sized difficulty tiers
     Data_df['difficulty'] = pd.qcut(Data_df['difficulty'], 4, labels=['Tier 1', 'Tier 2', 'Tier 3', 'Tier 4'])
 
     difficulty_levels = Data_df['difficulty'].unique()

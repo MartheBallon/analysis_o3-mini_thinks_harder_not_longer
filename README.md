@@ -1,23 +1,142 @@
-# The Relationship Between Reasoning and Performance in Large Language Models--o3 mini Thinks Harder, Not Longer
+# The Relationship Between Reasoning and Performance in Large Language Models — o3 (mini) Thinks Harder, Not Longer
 
-This repository contains the analysis code for "The Relationship Between Reasoning and Performance in Large Language Models--o3 (mini) Thinks Harder, Not Longer" by Marthe Ballon, Andres Algaba and Vincent Ginis (https://arxiv.org/abs/2502.15631).
+Code and analysis for the paper:
+
+> **The Relationship Between Reasoning and Performance in Large Language Models — o3 (mini) Thinks Harder, Not Longer**
+> Marthe Ballon, Andres Algaba, Vincent Ginis
+> *Scientific Reports* (2026)
+
+## Overview
+
+This repository contains all code to reproduce the figures and analyses in the paper. We systematically compare reasoning chain length and accuracy across OpenAI's o-series models (o1-mini, o3-mini (m), o3-mini (h)) on the Omni-MATH and GPQA Diamond benchmarks, with validation using DeepSeek-R1, gpt-oss-120b, and an independent GPT-5 mini judge.
+
+## Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/MartheBallon/analysis_o3-mini_thinks_harder_not_longer.git
+cd analysis_o3-mini_thinks_harder_not_longer
+
+# Create a virtual environment (recommended)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+**Python version:** 3.12.6 (tested)
 
 ## Data
-1. Original Omni-MATH dataset by Gao et al. (2024) is available under https://github.com/KbsdJames/Omni-MATH.
-2. Replication data for our analysis is available under https://zenodo.org/records/14878936.
 
-Download the data files at the links provided above and insert into the data folder.
+All data is hosted on Zenodo: [https://doi.org/10.5281/zenodo.14878936](https://doi.org/10.5281/zenodo.14878936)
 
-## Models 
-We evaluate the performance and token use of OpenAI models gpt-4o-06-08-2024, o1-mini-12-09-2024, o3-mini-31-01-2025 medium (default) and o3-mini-31-01-2025 high on the Omni-MATH benchmark. The o3-mini high model, instead of medium, is obtained by setting reasoning_effort to high.
+Download and extract the data into a `data/` directory so that the final structure matches the layout below. The DeepSeek-R1 and gpt-oss-120b model responses under `data/omni_math/other_models/` and `data/gpqa/other_models/` were obtained from [Vanhoyweghen et al. (2025)](https://arxiv.org/abs/2508.15842).
 
-To correct the answers of the considered models, we employ the open-source large language model Omni-Judge by Gao et al. (2024), available at https://huggingface.co/KbsdJames/Omni-Judge. 
+### Required data files
 
-## Overview of the code
-The performance_eval.py code is based on the evaluation code of the Omni-MATH paper by Gao et al (2024), available at https://github.com/KbsdJames/Omni-MATH.
+```
+data/
+├── Omni-MATH.jsonl                                  # Omni-MATH benchmark (4,428 problems)
+│
+├── omni-judge_output_4o.jsonl                        # gpt-4o responses + Omni-Judge verdicts
+├── omni-judge_output_o1.jsonl                        # o1-mini responses + Omni-Judge verdicts
+├── omni-judge_output_o3.jsonl                        # o3-mini (m) responses + Omni-Judge verdicts
+├── omni-judge_output_o3_high.jsonl                   # o3-mini (h) responses + Omni-Judge verdicts
+│
+├── omni_math/
+│   ├── reasoning_models/
+│   │   ├── responses_o1.jsonl                        # o1-mini raw responses
+│   │   ├── responses_o3.jsonl                        # o3-mini (m) raw responses
+│   │   ├── responses_o3_high.jsonl                   # o3-mini (h) raw responses
+│   │   ├── responses_4o.jsonl                        # gpt-4o raw responses
+│   │   ├── judge_results_o1.jsonl                    # GPT-5 mini judge verdicts for o1-mini
+│   │   ├── judge_results_o3.jsonl                    # GPT-5 mini judge verdicts for o3-mini (m)
+│   │   └── judge_results_o3_high.jsonl               # GPT-5 mini judge verdicts for o3-mini (h)
+│   │
+│   └── other_models/
+│       ├── responses_r1.jsonl                        # DeepSeek-R1 responses on Omni-MATH
+│       ├── responses_gpt_oss_120b.jsonl              # gpt-oss-120b responses on Omni-MATH
+│       ├── judge_results_r1.jsonl                    # GPT-5 mini verdicts for DeepSeek-R1
+│       └── judge_results_gpt_oss-120b.jsonl          # GPT-5 mini verdicts for gpt-oss-120b
+│
+└── gpqa/
+    ├── reasoning_models/
+    │   ├── results_o1.jsonl                          # o1 batch API results on GPQA Diamond
+    │   ├── results_o3.jsonl                          # o3 batch API results on GPQA Diamond
+    │   ├── judge_results_o1.jsonl                    # GPT-5 mini verdicts for o1
+    │   └── judge_results_o3.jsonl                    # GPT-5 mini verdicts for o3
+    │
+    └── other_models/
+        ├── responses_r1.jsonl                        # DeepSeek-R1 responses on GPQA Diamond
+        ├── responses_gpt_oss_120b.jsonl              # gpt-oss-120b responses on GPQA Diamond
+        ├── judge_results_r1.jsonl                    # GPT-5 mini verdicts for DeepSeek-R1
+        └── judge_results_gpt_oss_120b.jsonl          # GPT-5 mini verdicts for gpt-oss-120b
+```
 
-- config.py: prompts to generate model completions, judge their answers on Omni-MATH
-- figures_appendix.ipynb: notebook to reproduce supplementary figures in our manuscript
-- figures_main.ipynb: notebook to reproduce main figures in our manuscript
-- performance_eval.py: auxiliary functions, performance/token evaluation functions necessary for the analysis
-- regression_analysis.ipynb: notebook to reproduce the regression analysis in our manuscript
+### External benchmarks
+
+- **Omni-MATH:** [https://huggingface.co/datasets/KbsdJames/Omni-MATH](https://huggingface.co/datasets/KbsdJames/Omni-MATH)
+- **Omni-Judge:** [https://huggingface.co/KbsdJames/Omni-Judge](https://huggingface.co/KbsdJames/Omni-Judge)
+- **GPQA Diamond:** [https://huggingface.co/datasets/Idavidrein/gpqa](https://huggingface.co/datasets/Idavidrein/gpqa)
+
+## Reproducing the figures
+
+All figures are generated by Jupyter notebooks. Output PDFs are saved to `figures/`.
+
+| Notebook | Figures | Description |
+|---|---|---|
+| `main_figures.ipynb` | 1, 2, 3, 4 | Main paper figures: performance heatmaps, token distributions, accuracy vs. tokens |
+| `appendix_figures.ipynb` | A3, A4, A5, A6, A7 | Appendix: dataset distributions, gpt-4o analysis, QQ-plots, domain stratification |
+| `R1_figure.ipynb` | R1 | Judge robustness: Omni-Judge vs. GPT-5 mini |
+| `R2_figure.ipynb` | R2 | Non-OpenAI models: DeepSeek-R1 and gpt-oss-120b on Omni-MATH and GPQA Diamond |
+| `R3_figure.ipynb` | R3 | Question-level paired analysis: o1 vs. o3 token efficiency |
+| `R4_figure.ipynb` | R4 | Split heatmaps: accuracy and token usage presented separately |
+
+To generate all figures:
+
+```bash
+jupyter nbconvert --to notebook --execute main_figures.ipynb
+jupyter nbconvert --to notebook --execute appendix_figures.ipynb
+jupyter nbconvert --to notebook --execute R1_figure.ipynb
+jupyter nbconvert --to notebook --execute R2_figure.ipynb
+jupyter nbconvert --to notebook --execute R3_figure.ipynb
+jupyter nbconvert --to notebook --execute R4_figure.ipynb
+```
+
+## Code structure
+
+```
+├── performance_eval.py          # Utility module: data loading, parsing, performance metrics
+├── main_figures.ipynb           # Figures 1–4
+├── appendix_figures.ipynb       # Figures A3–A7
+├── R1_figure.ipynb              # Figure R1 (judge robustness)
+├── R2_figure.ipynb              # Figure R2 (non-OpenAI models)
+├── R3_figure.ipynb              # Figure R3 (question-level analysis)
+├── R4_figure.ipynb              # Figure R4 (split heatmaps)
+├── requirements.txt             # Python dependencies
+├── data/                        # Data directory (download from Zenodo)
+└── figures/                     # Output directory for generated figures
+```
+
+`performance_eval.py` provides shared functions used by `main_figures.ipynb`, `appendix_figures.ipynb`, and `R4_figure.ipynb`:
+- `get_dataframe()` / `get_dataframe_reasoning_models()` — load JSONL data and parse Omni-Judge verdicts
+- `domain_performance()` / `difficulty_performance()` / `domain_per_difficulty_performance()` — compute accuracy metrics stratified by domain and difficulty
+- `domain_per_difficulty_tokens()` / `difficulty_tokens()` / `total_tokens()` — compute token usage metrics
+- `conditional_prob()` — compute conditional error probability given token thresholds
+- `value_to_color()` / `value_to_progress()` — heatmap visualization helpers
+
+## Citation
+
+```bibtex
+@article{ballon2025thinks,
+  title={The Relationship Between Reasoning and Performance in Large Language Models---o3 (mini) Thinks Harder, Not Longer},
+  author={Ballon, Marthe and Algaba, Andres and Ginis, Vincent},
+  journal={Scientific Reports},
+  year={2026}
+}
+```
+
+## License
+
+This project is based on the [Omni-MATH](https://github.com/KbsdJames/Omni-MATH) benchmark analysis code.
