@@ -33,7 +33,7 @@ All data is hosted on Zenodo: [https://doi.org/10.5281/zenodo.14878936](https://
 
 Download and extract the data into a `data/` directory so that the final structure matches the layout below.
 
-The DeepSeek-R1 and gpt-oss-120b model responses on Omni-MATH (`data/omni_math/other_models/`) were obtained from [Vanhoyweghen et al. (2025)](https://arxiv.org/abs/2508.15842). The gpt-oss-120b responses on GPQA Diamond (`data/gpqa/other_models/responses_gpt_oss_120b.jsonl`) were obtained from [Ballon et al. (2026)](https://arxiv.org/abs/2601.23163).
+The DeepSeek-R1 model responses on Omni-MATH (`data/omni_math/other_models/`) were obtained from [Vanhoyweghen et al. (2025)](https://arxiv.org/abs/2508.15842). The gpt-oss-120b responses on GPQA Diamond (`data/gpqa/other_models/responses_gpt_oss_120b.jsonl`) were obtained from [Ballon et al. (2026)](https://arxiv.org/abs/2601.23163).
 
 ### Required data files
 
