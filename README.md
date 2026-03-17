@@ -31,7 +31,9 @@ pip install -r requirements.txt
 
 All data is hosted on Zenodo: [https://doi.org/10.5281/zenodo.14878936](https://doi.org/10.5281/zenodo.14878936)
 
-Download and extract the data into a `data/` directory so that the final structure matches the layout below. The DeepSeek-R1 and gpt-oss-120b model responses under `data/omni_math/other_models/` and `data/gpqa/other_models/` were obtained from [Vanhoyweghen et al. (2025)](https://arxiv.org/abs/2508.15842).
+Download and extract the data into a `data/` directory so that the final structure matches the layout below.
+
+The DeepSeek-R1 and gpt-oss-120b model responses on Omni-MATH (`data/omni_math/other_models/`) were obtained from [Vanhoyweghen et al. (2025)](https://arxiv.org/abs/2508.15842). The gpt-oss-120b responses on GPQA Diamond (`data/gpqa/other_models/responses_gpt_oss_120b.jsonl`) were obtained from [Ballon et al. (2026)](https://arxiv.org/abs/2601.23163).
 
 ### Required data files
 
@@ -39,10 +41,10 @@ Download and extract the data into a `data/` directory so that the final structu
 data/
 ├── Omni-MATH.jsonl                                  # Omni-MATH benchmark (4,428 problems)
 │
-├── omni-judge_output_4o.jsonl                        # gpt-4o responses + Omni-Judge verdicts
-├── omni-judge_output_o1.jsonl                        # o1-mini responses + Omni-Judge verdicts
-├── omni-judge_output_o3.jsonl                        # o3-mini (m) responses + Omni-Judge verdicts
-├── omni-judge_output_o3_high.jsonl                   # o3-mini (h) responses + Omni-Judge verdicts
+├── omni-judge_output_4o.jsonl                        # gpt-4o responses + Omni-Judge results
+├── omni-judge_output_o1.jsonl                        # o1-mini responses + Omni-Judge results
+├── omni-judge_output_o3.jsonl                        # o3-mini (m) responses + Omni-Judge results
+├── omni-judge_output_o3_high.jsonl                   # o3-mini (h) responses + Omni-Judge results
 │
 ├── omni_math/
 │   ├── reasoning_models/
@@ -50,28 +52,28 @@ data/
 │   │   ├── responses_o3.jsonl                        # o3-mini (m) raw responses
 │   │   ├── responses_o3_high.jsonl                   # o3-mini (h) raw responses
 │   │   ├── responses_4o.jsonl                        # gpt-4o raw responses
-│   │   ├── judge_results_o1.jsonl                    # GPT-5 mini judge verdicts for o1-mini
-│   │   ├── judge_results_o3.jsonl                    # GPT-5 mini judge verdicts for o3-mini (m)
-│   │   └── judge_results_o3_high.jsonl               # GPT-5 mini judge verdicts for o3-mini (h)
+│   │   ├── judge_results_o1.jsonl                    # GPT-5 mini judge results for o1-mini
+│   │   ├── judge_results_o3.jsonl                    # GPT-5 mini judge results for o3-mini (m)
+│   │   └── judge_results_o3_high.jsonl               # GPT-5 mini judge results for o3-mini (h)
 │   │
 │   └── other_models/
 │       ├── responses_r1.jsonl                        # DeepSeek-R1 responses on Omni-MATH
 │       ├── responses_gpt_oss_120b.jsonl              # gpt-oss-120b responses on Omni-MATH
-│       ├── judge_results_r1.jsonl                    # GPT-5 mini verdicts for DeepSeek-R1
-│       └── judge_results_gpt_oss-120b.jsonl          # GPT-5 mini verdicts for gpt-oss-120b
+│       ├── judge_results_r1.jsonl                    # GPT-5 mini results for DeepSeek-R1
+│       └── judge_results_gpt_oss-120b.jsonl          # GPT-5 mini results for gpt-oss-120b
 │
 └── gpqa/
     ├── reasoning_models/
     │   ├── results_o1.jsonl                          # o1 batch API results on GPQA Diamond
     │   ├── results_o3.jsonl                          # o3 batch API results on GPQA Diamond
-    │   ├── judge_results_o1.jsonl                    # GPT-5 mini verdicts for o1
-    │   └── judge_results_o3.jsonl                    # GPT-5 mini verdicts for o3
+    │   ├── judge_results_o1.jsonl                    # GPT-5 mini results for o1
+    │   └── judge_results_o3.jsonl                    # GPT-5 mini results for o3
     │
     └── other_models/
         ├── responses_r1.jsonl                        # DeepSeek-R1 responses on GPQA Diamond
         ├── responses_gpt_oss_120b.jsonl              # gpt-oss-120b responses on GPQA Diamond
-        ├── judge_results_r1.jsonl                    # GPT-5 mini verdicts for DeepSeek-R1
-        └── judge_results_gpt_oss_120b.jsonl          # GPT-5 mini verdicts for gpt-oss-120b
+        ├── judge_results_r1.jsonl                    # GPT-5 mini results for DeepSeek-R1
+        └── judge_results_gpt_oss_120b.jsonl          # GPT-5 mini results for gpt-oss-120b
 ```
 
 ### External benchmarks
@@ -120,7 +122,7 @@ jupyter nbconvert --to notebook --execute R4_figure.ipynb
 ```
 
 `performance_eval.py` provides shared functions used by `main_figures.ipynb`, `appendix_figures.ipynb`, and `R4_figure.ipynb`:
-- `get_dataframe()` / `get_dataframe_reasoning_models()` — load JSONL data and parse Omni-Judge verdicts
+- `get_dataframe()` / `get_dataframe_reasoning_models()` — load JSONL data and parse Omni-Judge judgements
 - `domain_performance()` / `difficulty_performance()` / `domain_per_difficulty_performance()` — compute accuracy metrics stratified by domain and difficulty
 - `domain_per_difficulty_tokens()` / `difficulty_tokens()` / `total_tokens()` — compute token usage metrics
 - `conditional_prob()` — compute conditional error probability given token thresholds
