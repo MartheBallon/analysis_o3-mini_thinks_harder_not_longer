@@ -4,7 +4,6 @@ Code and analysis for the paper:
 
 > **The Relationship Between Reasoning and Performance in Large Language Models — o3 (mini) Thinks Harder, Not Longer**
 > Marthe Ballon, Andres Algaba, Vincent Ginis
-> *Scientific Reports* (2026)
 
 ## Overview
 
